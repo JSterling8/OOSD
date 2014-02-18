@@ -7,9 +7,21 @@
 //============================================================================
 
 #include <iostream>
+#include "../Models/Vehicle.h"
+#include "../Models/AutoFuelPump.h"
+
+
 using namespace std;
 
+Vehicle * v;
+string s;
+
 int main() {
-	cout << "I'm C++ and I break a lot." << endl; // prints I'm C++ and I break a lot.
+	v = new Vehicle("Jaguar");
+
+	s = v->toStringg();
+
+	cout << "The brand is: " << s << endl;
+
 	return 0;
 }
