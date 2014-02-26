@@ -7,9 +7,23 @@
 //============================================================================
 
 #include <iostream>
+#include "../Models/Vehicle.h"
+#include "../Models/AutoFuelPump.h"
+#include "../Models/FuelPump.h"
+
 using namespace std;
 
+Vehicle * v;
+FuelPump * fp;
+string s;
+
 int main() {
-	cout << "I'm C++ and I break a lot." << endl; // prints I'm C++ and I break a lot.
+	v = new Vehicle("Jaguar");
+	fp = new FuelPump("Bobbbbbyyy!");
+
+	s = fp->toString();
+
+	cout << "Fuel Pump's name is: " << s << endl;
+
 	return 0;
 }
