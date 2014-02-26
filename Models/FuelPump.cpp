@@ -6,16 +6,20 @@
  */
 
 #include "FuelPump.h"
+#include <string>
 
-namespace std {
 
-FuelPump::FuelPump() {
+
+FuelPump::FuelPump(std::string robert) {
 	// TODO Auto-generated constructor stub
+	this->bob = robert;
+}
 
+std::string FuelPump::toString(){
+	return bob;
 }
 
 FuelPump::~FuelPump() {
 	// TODO Auto-generated destructor stub
 }
 
-} /* namespace std */

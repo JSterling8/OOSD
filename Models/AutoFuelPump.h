@@ -8,14 +8,19 @@
 #ifndef AUTOFUELPUMP_H_
 #define AUTOFUELPUMP_H_
 
-namespace std {
+#include "FuelPump.h"
+#include <string>
 
-class AutoFuelPump {
+
+class AutoFuelPump : public FuelPump {
 public:
-	AutoFuelPump();
-	virtual ~AutoFuelPump();
+	AutoFuelPump(std::string, std::string);
+	std::string toStringg();
+	~AutoFuelPump();
+
+private:
+	std::string steve;
 };
 
-} /* namespace std */
 
 #endif /* AUTOFUELPUMP_H_ */

@@ -7,10 +7,15 @@
 
 #include "AutoFuelPump.h"
 
-namespace std {
 
-AutoFuelPump::AutoFuelPump() {
-	// TODO Auto-generated constructor stub
+AutoFuelPump::AutoFuelPump(std::string bob, std::string steve)  : FuelPump(std::string) {
+
+	this->steve = steve;
+
+}
+
+std::string AutoFuelPump::toStringg(){
+return NULL;
 
 }
 
@@ -18,4 +23,3 @@ AutoFuelPump::~AutoFuelPump() {
 	// TODO Auto-generated destructor stub
 }
 
-} /* namespace std */

@@ -9,19 +9,21 @@
 #include <iostream>
 #include "../Models/Vehicle.h"
 #include "../Models/AutoFuelPump.h"
-
+#include "../Models/FuelPump.h"
 
 using namespace std;
 
 Vehicle * v;
+FuelPump * fp;
 string s;
 
 int main() {
 	v = new Vehicle("Jaguar");
+	fp = new FuelPump("Bobbbbbyyy!");
 
-	s = v->toStringg();
+	s = fp->toString();
 
-	cout << "The brand is: " << s << endl;
+	cout << "Fuel Pump's name is: " << s << endl;
 
 	return 0;
 }
