@@ -8,7 +8,7 @@
 #include "AutoFuelPump.h"
 
 
-AutoFuelPump::AutoFuelPump(std::string bob, std::string steve)  : FuelPump(std::string) {
+AutoFuelPump::AutoFuelPump(std::string bob, std::string steve)  : FuelPump(bob), steve(steve) {
 
 	this->steve = steve;
 
