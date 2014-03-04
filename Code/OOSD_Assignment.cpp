@@ -17,7 +17,7 @@ Vehicle * v;
 FuelPump * fp;
 string s;
 
-int main() {
+/* int main() {
 	v = new Vehicle("Jaguar");
 	fp = new FuelPump("Bobbbbbyyy!");
 
@@ -26,4 +26,4 @@ int main() {
 	cout << "Fuel Pump's name is: " << s << endl;
 
 	return 0;
-}
+} */
