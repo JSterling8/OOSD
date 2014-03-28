@@ -12,7 +12,6 @@ namespace std {
 
 Vehicle::Vehicle(string brandEntered) {
 	Vehicle::brand = brandEntered;
-
 }
 
 string Vehicle::toStringg() {
