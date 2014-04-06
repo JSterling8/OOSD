@@ -14,6 +14,7 @@ namespace std {
 
 bool inUse;
 Vehicle* vehicleAtPump;
+int pumpLoop;
 
 FuelPump::FuelPump(std::string fuelType) {
 	FuelPump::fuelType = fuelType;
@@ -25,7 +26,7 @@ FuelPump::FuelPump(std::string fuelType) {
 		FuelPump::flowRate = 15;
 	}
 	else if (fuelType == "Electric"){
-		FuelPump::flowRate = 2;
+		FuelPump::flowRate = 3;
 	}
 	// Default flow rate for unknown/miscellanious fuel types:
 	else {
@@ -43,16 +44,25 @@ string FuelPump::getFuelType(){
 	return fuelType;
 }
 
-void FuelPump::pump(Vehicle* v){
+void FuelPump::setVehicleAtPump(Vehicle* v){
 	vehicleAtPump = v;
+	inUse = true;
+	pumpLoop = 0;
 }
 
 void FuelPump::pump(){
-	bool full = vehicleAtPump->addFuel(1);
+	bool full = false;
+
+	if ((pumpLoop + flowRate) >= 15){
+		full = vehicleAtPump->addFuel(1);
+		pumpLoop = 0;
+	}
 
 	if(full){
 		isInUse = false;
 	}
+
+	pumpLoop++;
 }
 
 

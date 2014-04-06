@@ -56,6 +56,9 @@ void FuelStation::generatePumps() {
 	}
 }
 
+/**
+ * Uses POisson distribution to see if a vehicle has arrived at any second.
+ */
 void FuelStation::vehicleArrivedAt() {
 	double bar = 10.0 * exp(-0.1);
 	int pumpIndex = -1;
@@ -70,8 +73,9 @@ void FuelStation::vehicleArrivedAt() {
 			pumpIndex = getPump(v->getFuelType());
 			// If there is a pump free (i.e., if pumpIndex isn't -1)
 			if (pumpIndex >= 0){
-				pumps[pumpIndex].pump(v);
+				pumps[pumpIndex].setVehicleAtPump(v);
 			}
+			// If no pump is free, add the Vehicle to the end of the queue.
 			else{
 				vehicleDeque.push_back(v);
 			}
@@ -80,8 +84,12 @@ void FuelStation::vehicleArrivedAt() {
 			arrived[interval] = false;
 		}
 
-		// Loop through any pumping vehicles
-		// for (int )
+		// Loop through any pumps with vehicles and call the pump function.
+		for (int j = 0; j < pumps.size(); ++j){
+			if (pumps[j].isInUse()){
+				pumps[j].pump();
+			}
+		}
 
 
 		// Loop through any waiting vehicles
@@ -91,15 +99,14 @@ void FuelStation::vehicleArrivedAt() {
 
 			// If there is a pump free (i.e., if pumpIndex isn't -1)
 			if (pumpIndex >= 0){
-				pumps[pumpIndex].pump(temp);
+				pumps[pumpIndex].setVehicleAtPump(temp);
 			}
 			else{
 				vehicleDeque.push_back(temp);
 			}
 		}
-		//Is a sales person available?
 
-		//If the transaction is complete log the data.
+		// TODO If the pumping is complete log the data.
 	}
 }
 
