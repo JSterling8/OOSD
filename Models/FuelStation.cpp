@@ -6,16 +6,19 @@
  */
 
 #include "FuelStation.h"
-#include <iostream>
+
 #include <cmath>
 #include <cstdlib>
 #include <ctime>
+#include <iostream>
+#include <vector>
 
 namespace std {
 
 #define LENGTH 100
 
 bool arrived[LENGTH];
+vector<FuelPump> pumps;
 
 FuelStation::FuelStation() {
 	// Initialize random seed:
@@ -23,32 +26,34 @@ FuelStation::FuelStation() {
 	generatePumps();
 }
 
-void generatePumps() {
-	int numOfPumps = rand() % 10 + 1;
-	FuelStation::pumps[numOfPumps];
+void FuelStation::generatePumps() {
+	// We can have 1-10 pumps
+	pumps.reserve(rand() % 10 + 1);
 
+	// Type decider is just used
 	int typeDecider = 0;
-	for (int i = 0; i < numOfPumps; ++i){
+
+	// Loop through our pumps vector and randomly put in different types of pumps
+	for (unsigned int i = 0; i < pumps.size(); ++i){
 		typeDecider = rand() % 4 + 1;
+		string fuelType;
 		if (typeDecider == 1){
-			FuelStation::pumps[i] = new FuelPump("Diesel");
+			fuelType = "Diesel";
 		}
 		else if (typeDecider == 2){
-			FuelStation::pumps[i] = new FuelPump("Premium");
+			fuelType = "Premium";
 		}
 		else if (typeDecider == 3){
-			FuelStation::pumps[i] = new FuelPump("Regular");
+			fuelType = "Regular";
 		}
 		else if (typeDecider == 4){
-			FuelStation::pumps[i] = new FuelPump("Electric");
+			fuelType = "Electric";
 		}
+		pumps[i] = FuelPump(fuelType);
 	}
 }
 
-void vehicleArrivedAt() {
-
-
-
+void FuelStation::vehicleArrivedAt() {
 	double bar = 10.0 * exp(-0.1);
 	for( int interval = 0; interval < LENGTH; ++interval ) {
 		int dice = rand() % 10 + 1;

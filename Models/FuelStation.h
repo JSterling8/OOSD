@@ -8,7 +8,7 @@
 #ifndef FUELSTATION_H_
 #define FUELSTATION_H_
 
-#import "FuelPump.h"
+#include "FuelPump.h"
 
 namespace std {
 
@@ -17,8 +17,6 @@ public:
 	FuelStation();
 	void vehicleArrivedAt();
 	void generatePumps();
-private:
-	FuelPump pumps[];
 };
 
 } /* namespace std */

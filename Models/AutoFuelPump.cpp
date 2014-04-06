@@ -9,7 +9,7 @@
 #include "FuelPump.h"
 
 
-AutoFuelPump::AutoFuelPump(std::string& fuelType)  : FuelPump(fuelType) {
+AutoFuelPump::AutoFuelPump(std::string fuelType)  : FuelPump(fuelType) {
 
 }
 
