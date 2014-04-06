@@ -14,6 +14,7 @@
 #include <iostream>
 #include <vector>
 #include <deque>
+#include <map>
 
 namespace std {
 
@@ -22,10 +23,19 @@ namespace std {
 bool arrived[LENGTH];
 vector<FuelPump> pumps;
 deque<Vehicle*> vehicleDeque;
+map<string, bool> fuelTypes;
 
 FuelStation::FuelStation() {
 	// Initialize random seed:
 	srand ( time(NULL) );
+
+	// Set all of our fuel types to be false, because no pumps have been built yet.
+	fuelTypes.insert(std::pair<string, int>("Diesel", false));
+	fuelTypes.insert(std::pair<string, int>("Premium", false));
+	fuelTypes.insert(std::pair<string, int>("Regular", false));
+	fuelTypes.insert(std::pair<string, int>("Electric", false));
+
+	// Fill the station with pumps.
 	generatePumps();
 }
 
@@ -33,24 +43,39 @@ void FuelStation::generatePumps() {
 	// We can have 1-10 pumps
 	pumps.reserve(rand() % 10 + 1);
 
-	// Type decider is just used
+	// This will be used to determing the pump's fuel type.
 	int typeDecider = 0;
+
+	string fuelType;
 
 	// Loop through our pumps vector and randomly put in different types of pumps
 	for (unsigned int i = 0; i < pumps.size(); ++i){
+		// This is an int from 1-4 that will be used to determing the pump's fuel type.
 		typeDecider = rand() % 4 + 1;
-		string fuelType;
+
 		if (typeDecider == 1){
 			fuelType = "Diesel";
+			if (!fuelTypes[fuelType]){
+				fuelTypes[fuelType] = true;
+			}
 		}
 		else if (typeDecider == 2){
 			fuelType = "Premium";
+			if (!fuelTypes[fuelType]){
+				fuelTypes[fuelType] = true;
+			}
 		}
 		else if (typeDecider == 3){
 			fuelType = "Regular";
+			if (!fuelTypes[fuelType]){
+				fuelTypes[fuelType] = true;
+			}
 		}
 		else if (typeDecider == 4){
 			fuelType = "Electric";
+			if (!fuelTypes[fuelType]){
+				fuelTypes[fuelType] = true;
+			}
 		}
 		pumps[i] = FuelPump(fuelType);
 	}
@@ -69,15 +94,22 @@ void FuelStation::vehicleArrivedAt() {
 			arrived[interval] = true;
 			Vehicle* v = generateRandomVehicle();
 			cout << "Vehicle arrived at time: " << interval << endl;
-			// Is there a pump of the right type free?
-			pumpIndex = getPump(v->getFuelType());
-			// If there is a pump free (i.e., if pumpIndex isn't -1)
-			if (pumpIndex >= 0){
-				pumps[pumpIndex].setVehicleAtPump(v);
+			// Does this station have the fuel this vehicle needs?
+			if (fuelTypes[v->getFuelType()]){
+				// Is there a pump of the right type free?
+				pumpIndex = getPump(v->getFuelType());
+				// If there is a pump free (i.e., if pumpIndex isn't -1)
+				if (pumpIndex >= 0){
+					pumps[pumpIndex].setVehicleAtPump(v);
+				}
+				// If no pump is free, add the Vehicle to the end of the queue.
+				else{
+					vehicleDeque.push_back(v);
+				}
 			}
-			// If no pump is free, add the Vehicle to the end of the queue.
-			else{
-				vehicleDeque.push_back(v);
+			else {
+				cout << "Vehicle could not be served.  No pumps of that type." << endl;
+				delete v;
 			}
 		}
 		else {
@@ -85,7 +117,7 @@ void FuelStation::vehicleArrivedAt() {
 		}
 
 		// Loop through any pumps with vehicles and call the pump function.
-		for (int j = 0; j < pumps.size(); ++j){
+		for (unsigned int j = 0; j < pumps.size(); ++j){
 			if (pumps[j].isInUse()){
 				pumps[j].pump();
 			}
@@ -93,16 +125,20 @@ void FuelStation::vehicleArrivedAt() {
 
 
 		// Loop through any waiting vehicles
-		for (int i = 0; i < vehicleDeque.size(); ++i){
-			Vehicle* temp = vehicleDeque.pop_front();
-			pumpIndex = getPump(temp->getFuelType());
+		for (unsigned int i = 0; i < vehicleDeque.size(); ++i){
+			if (!vehicleDeque.empty()){
+				Vehicle* temp = vehicleDeque.front();
+				vehicleDeque.pop_front();
 
-			// If there is a pump free (i.e., if pumpIndex isn't -1)
-			if (pumpIndex >= 0){
-				pumps[pumpIndex].setVehicleAtPump(temp);
-			}
-			else{
-				vehicleDeque.push_back(temp);
+				pumpIndex = getPump(temp->getFuelType());
+
+				// If there is a pump free (i.e., if pumpIndex isn't -1)
+				if (pumpIndex >= 0){
+					pumps[pumpIndex].setVehicleAtPump(temp);
+				}
+				else{
+					vehicleDeque.push_back(temp);
+				}
 			}
 		}
 

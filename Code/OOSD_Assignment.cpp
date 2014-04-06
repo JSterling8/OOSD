@@ -6,7 +6,7 @@
 // Description : Hello World in C++, Ansi-style
 //============================================================================
 
-
+/*
 
 #include <iostream>
 #include "winsock2.h"
@@ -104,3 +104,4 @@ int collectResponse(SOCKET & socket ) {
 }
 
 
+*/

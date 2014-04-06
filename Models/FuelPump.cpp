@@ -59,7 +59,7 @@ void FuelPump::pump(){
 	}
 
 	if(full){
-		isInUse = false;
+		inUse = false;
 	}
 
 	pumpLoop++;
