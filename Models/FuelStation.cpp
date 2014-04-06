@@ -6,6 +6,7 @@
  */
 
 #include "FuelStation.h"
+#include "Vehicle.h"
 
 #include <cmath>
 #include <cstdlib>
@@ -60,9 +61,11 @@ void FuelStation::vehicleArrivedAt() {
 		// Handle vehicles arriving
 		if ( dice > bar ) {
 			arrived[interval] = true;
+			Vehicle* v = generateRandomVehicle();
 			cout << "Vehicle arrived at time: " << interval << endl;
-			// Is there a pump free?
-			// Yes - assign sales person
+			// Is there a pump of the right type free?
+
+			// Yes - assign a pump
 			// No - add customer to queue
 		}
 		else {
@@ -74,6 +77,40 @@ void FuelStation::vehicleArrivedAt() {
 
 		//If the transaction is complete log the data.
 	}
+}
+
+/**
+ * Randomly generates a vehicle.
+ * We need a random amount of fuel currently in the tank, a tank size,
+ * and a fuel type.
+ */
+Vehicle* FuelStation::generateRandomVehicle() {
+	// Tank size is between 1 and 30.
+	int tankSize = rand() % 30 + 1;
+
+	// Fuel remaining is between 0 and tankSize-1.
+	int fuelRemaining = tankSize - (rand() % tankSize + 1);
+
+	string typeOfFuel;
+
+	// Randomly assigns a fuel type.
+	int typeDecider = rand() % 4 + 1;
+	string fuelType;
+	if (typeDecider == 1){
+		fuelType = "Diesel";
+	}
+	else if (typeDecider == 2){
+		fuelType = "Premium";
+	}
+	else if (typeDecider == 3){
+		fuelType = "Regular";
+	}
+	else if (typeDecider == 4){
+		fuelType = "Electric";
+	}
+
+	// Returns a Vehicle with the three random variables calculated above.
+	return new Vehicle(fuelRemaining, tankSize, typeOfFuel);
 }
 
 } /* namespace std */

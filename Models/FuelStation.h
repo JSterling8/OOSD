@@ -9,6 +9,7 @@
 #define FUELSTATION_H_
 
 #include "FuelPump.h"
+#include "Vehicle.h"
 
 namespace std {
 
@@ -17,6 +18,7 @@ public:
 	FuelStation();
 	void vehicleArrivedAt();
 	void generatePumps();
+	Vehicle* generateRandomVehicle();
 };
 
 } /* namespace std */
