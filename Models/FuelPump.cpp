@@ -22,6 +22,10 @@ FuelPump::FuelPump(std::string& fuelType) {
 	else if (fuelType == "Electric"){
 		FuelPump::flowRate = 2;
 	}
+	// Default flow rate for unknown/miscellanious fuel types:
+	else {
+		FuelPump::flowRate = 8;
+	}
 }
 
 
