@@ -14,7 +14,7 @@ using namespace std;
 int main(int argc, char * argv[]) {
 	char begin;
 
-	cout << "Begin simulation? y/n";
+	cout << "Begin simulation? y/n" << endl;
 	cin >> begin;
 
 	if(begin == 'y'){

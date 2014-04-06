@@ -109,6 +109,11 @@ void FuelStation::vehicleArrivedAt() {
 			}
 			else {
 				cout << "Vehicle could not be served.  No pumps of that type." << endl;
+				cout << "Vehicles fuel type: " << v->getFuelType() << endl;
+				cout << "Diesel here: " << fuelTypes["Diesel"] << endl;
+				cout << "Premium here: " << fuelTypes["Premium"] << endl;
+				cout << "Regular here: " << fuelTypes["Regular"] << endl;
+				cout << "Electric here: " << fuelTypes["Electric"] << endl;
 				delete v;
 			}
 		}
@@ -158,11 +163,11 @@ Vehicle* FuelStation::generateRandomVehicle() {
 	// Fuel remaining is between 0 and tankSize-1.
 	int fuelRemaining = tankSize - (rand() % tankSize + 1);
 
-	string typeOfFuel;
+	string fuelType;
 
 	// Randomly assigns a fuel type.
 	int typeDecider = rand() % 4 + 1;
-	string fuelType;
+
 	if (typeDecider == 1){
 		fuelType = "Diesel";
 	}
@@ -177,7 +182,7 @@ Vehicle* FuelStation::generateRandomVehicle() {
 	}
 
 	// Returns a Vehicle with the three random variables calculated above.
-	return new Vehicle(fuelRemaining, tankSize, typeOfFuel);
+	return new Vehicle(fuelRemaining, tankSize, fuelType);
 }
 
 /**
