@@ -6,18 +6,14 @@
  */
 
 #include "AutoFuelPump.h"
+#include "FuelPump.h"
 
 
-AutoFuelPump::AutoFuelPump(std::string bob, std::string steve)  : FuelPump(bob), steve(steve) {
+AutoFuelPump::AutoFuelPump(std::string bob, int number)  : FuelPump(bob, number) {
 
-	this->steve = steve;
 
 }
 
-std::string AutoFuelPump::toStringg(){
-return NULL;
-
-}
 
 AutoFuelPump::~AutoFuelPump() {
 	// TODO Auto-generated destructor stub

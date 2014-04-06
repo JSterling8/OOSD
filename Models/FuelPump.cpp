@@ -10,14 +10,12 @@
 
 
 
-FuelPump::FuelPump(std::string robert) {
-	// TODO Auto-generated constructor stub
-	this->bob = robert;
+FuelPump::FuelPump(std::string& fuelType, int flowRate) {
+	FuelPump::fuelType = fuelType;
+	FuelPump::flowRate = flowRate;
 }
 
-std::string FuelPump::toString(){
-	return bob;
-}
+
 
 FuelPump::~FuelPump() {
 	// TODO Auto-generated destructor stub

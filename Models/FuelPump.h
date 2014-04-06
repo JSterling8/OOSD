@@ -10,17 +10,14 @@
 
 #include <string>
 
-
-
-
-
 class FuelPump {
 public:
-	FuelPump(std::string);
-	std::string toString();
+	FuelPump(std::string&, int);
+
 	virtual ~FuelPump();
 private:
-	std::string bob;
+	std::string fuelType;
+	int flowRate;
 };
 
 

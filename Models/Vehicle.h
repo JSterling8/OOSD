@@ -15,12 +15,15 @@ namespace std {
 
 class Vehicle {
 public:
-	Vehicle(string);
+	Vehicle(int, int, string);
 	string toStringg();
+	int getFuelRemaining();
+	int getTankSize();
+	string getFuelType();
+	void addFuel(int);
 	virtual ~Vehicle();
 
 private:
-	string brand;
 
 };
 
