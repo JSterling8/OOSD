@@ -10,16 +10,26 @@
 
 
 
-FuelPump::FuelPump(std::string robert) {
-	// TODO Auto-generated constructor stub
-	this->bob = robert;
+FuelPump::FuelPump(std::string& fuelType) {
+	FuelPump::fuelType = fuelType;
+
+	if (fuelType == "Diesel"){
+		FuelPump::flowRate = 10;
+	}
+	else if (fuelType == "Regular" || fuelType == "Premium"){
+		FuelPump::flowRate = 15;
+	}
+	else if (fuelType == "Electric"){
+		FuelPump::flowRate = 2;
+	}
+	// Default flow rate for unknown/miscellanious fuel types:
+	else {
+		FuelPump::flowRate = 8;
+	}
 }
 
-std::string FuelPump::toString(){
-	return bob;
-}
+
 
 FuelPump::~FuelPump() {
 	// TODO Auto-generated destructor stub
 }
-
