@@ -13,16 +13,19 @@ using namespace std;
 
 int main(int argc, char * argv[]) {
 	char begin;
+	char again = 'y';
 
-	cout << "Begin simulation? y/n" << endl;
-	cin >> begin;
+	while(again == 'y'){
+		cout << "Begin simulation? y/n" << endl;
+		cin >> begin;
 
-	if(begin == 'y'){
-		FuelStation* station = new FuelStation();
-		station->vehicleArrivedAt();
-	}
-	else{
-		//exit(0);
+		if(begin == 'y'){
+			FuelStation* station = new FuelStation();
+			station->vehicleArrivedAt();
+		}
+
+		cout << "Run again? y/n" << endl;
+		cin >> again;
 	}
 }
 

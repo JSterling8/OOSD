@@ -56,25 +56,29 @@ void FuelStation::generatePumps() {
 		if (typeDecider == 1){
 			fuelType = "Diesel";
 			if (!fuelTypes[fuelType]){
-				fuelTypes[fuelType] = true;
+				fuelTypes.erase(fuelType);
+				fuelTypes.insert(std::pair<string, int>(fuelType, true));
 			}
 		}
 		else if (typeDecider == 2){
 			fuelType = "Premium";
 			if (!fuelTypes[fuelType]){
-				fuelTypes[fuelType] = true;
+				fuelTypes.erase(fuelType);
+				fuelTypes.insert(std::pair<string, int>(fuelType, true));
 			}
 		}
 		else if (typeDecider == 3){
 			fuelType = "Regular";
 			if (!fuelTypes[fuelType]){
-				fuelTypes[fuelType] = true;
+				fuelTypes.erase(fuelType);
+				fuelTypes.insert(std::pair<string, int>(fuelType, true));
 			}
 		}
 		else if (typeDecider == 4){
 			fuelType = "Electric";
 			if (!fuelTypes[fuelType]){
-				fuelTypes[fuelType] = true;
+				fuelTypes.erase(fuelType);
+				fuelTypes.insert(std::pair<string, int>(fuelType, true));
 			}
 		}
 		pumps[i] = FuelPump(fuelType);
