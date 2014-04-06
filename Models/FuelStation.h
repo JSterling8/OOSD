@@ -19,6 +19,7 @@ public:
 	void vehicleArrivedAt();
 	void generatePumps();
 	Vehicle* generateRandomVehicle();
+	int getPump(string);
 };
 
 } /* namespace std */

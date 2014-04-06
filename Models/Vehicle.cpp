@@ -28,24 +28,29 @@ Vehicle::Vehicle(int fuelLeft, int sizeOfTank, string typeOfFuel) {
 	fuelType = typeOfFuel;
 }
 
-int maxFueCanAdd() {
+int Vehicle::maxFuelCanAdd() {
 	return (tankSize-fuelRemaining);
 }
 
-int getFuelRemaining() {
+int Vehicle::getFuelRemaining() {
 	return fuelRemaining;
 }
 
 
-int getTankSize(){
+int Vehicle::getTankSize(){
 	return tankSize;
 }
 
-string getFuelType(){
+string Vehicle::getFuelType(){
 	return fuelType;
 }
 
-void addFuel(int amountToAdd){
+/**
+ *
+ * @param amountToAdd How much fuel to add to the vehicle.
+ * @return Whether or not it's full.
+ */
+bool Vehicle::addFuel(int amountToAdd){
 	// Only adds as much fuel as the tank can hold.
 	if ((fuelRemaining + amountToAdd) <= tankSize){
 		fuelRemaining += amountToAdd;

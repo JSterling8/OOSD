@@ -6,9 +6,14 @@
  */
 
 #include "FuelPump.h"
+#include "Vehicle.h"
 #include <string>
+#include <cstdlib>
 
+namespace std {
 
+bool inUse;
+Vehicle* vehicleAtPump;
 
 FuelPump::FuelPump(std::string fuelType) {
 	FuelPump::fuelType = fuelType;
@@ -26,10 +31,33 @@ FuelPump::FuelPump(std::string fuelType) {
 	else {
 		FuelPump::flowRate = 8;
 	}
+
+	inUse = false;
 }
 
+bool FuelPump::isInUse(){
+	return inUse;
+}
+
+string FuelPump::getFuelType(){
+	return fuelType;
+}
+
+void FuelPump::pump(Vehicle* v){
+	vehicleAtPump = v;
+}
+
+void FuelPump::pump(){
+	bool full = vehicleAtPump->addFuel(1);
+
+	if(full){
+		isInUse = false;
+	}
+}
 
 
 FuelPump::~FuelPump() {
-	// TODO Auto-generated destructor stub
+	// Auto-generated destructor stub
 }
+
+} /* namespace std */

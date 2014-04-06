@@ -13,6 +13,7 @@
 #include <ctime>
 #include <iostream>
 #include <vector>
+#include <deque>
 
 namespace std {
 
@@ -20,6 +21,7 @@ namespace std {
 
 bool arrived[LENGTH];
 vector<FuelPump> pumps;
+deque<Vehicle*> vehicleDeque;
 
 FuelStation::FuelStation() {
 	// Initialize random seed:
@@ -56,6 +58,7 @@ void FuelStation::generatePumps() {
 
 void FuelStation::vehicleArrivedAt() {
 	double bar = 10.0 * exp(-0.1);
+	int pumpIndex = -1;
 	for( int interval = 0; interval < LENGTH; ++interval ) {
 		int dice = rand() % 10 + 1;
 		// Handle vehicles arriving
@@ -64,15 +67,36 @@ void FuelStation::vehicleArrivedAt() {
 			Vehicle* v = generateRandomVehicle();
 			cout << "Vehicle arrived at time: " << interval << endl;
 			// Is there a pump of the right type free?
-
-			// Yes - assign a pump
-			// No - add customer to queue
+			pumpIndex = getPump(v->getFuelType());
+			// If there is a pump free (i.e., if pumpIndex isn't -1)
+			if (pumpIndex >= 0){
+				pumps[pumpIndex].pump(v);
+			}
+			else{
+				vehicleDeque.push_back(v);
+			}
 		}
 		else {
 			arrived[interval] = false;
 		}
-		//Handle sales people and existing customers
-		//Is there a customer waiting
+
+		// Loop through any pumping vehicles
+		// for (int )
+
+
+		// Loop through any waiting vehicles
+		for (int i = 0; i < vehicleDeque.size(); ++i){
+			Vehicle* temp = vehicleDeque.pop_front();
+			pumpIndex = getPump(temp->getFuelType());
+
+			// If there is a pump free (i.e., if pumpIndex isn't -1)
+			if (pumpIndex >= 0){
+				pumps[pumpIndex].pump(temp);
+			}
+			else{
+				vehicleDeque.push_back(temp);
+			}
+		}
 		//Is a sales person available?
 
 		//If the transaction is complete log the data.
@@ -112,5 +136,22 @@ Vehicle* FuelStation::generateRandomVehicle() {
 	// Returns a Vehicle with the three random variables calculated above.
 	return new Vehicle(fuelRemaining, tankSize, typeOfFuel);
 }
+
+/**
+ * @param fuelType the type of fuel needed.
+ * @returns The index of a free pump with the right fuel type.  If none exists, it returns -1.
+ */
+int FuelStation::getPump(string fuelType){
+	// Loop through the pumps.
+	for(unsigned int i = 0; i < pumps.size(); ++i){
+		// If a pump of the correct fuel type is available, return its index in the FuelPump vector.
+		if (pumps[i].getFuelType() == fuelType && !pumps[i].isInUse()){
+			return i;
+		}
+	}
+
+	return -1;
+}
+
 
 } /* namespace std */

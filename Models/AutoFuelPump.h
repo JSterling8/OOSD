@@ -11,6 +11,7 @@
 #include "FuelPump.h"
 #include <string>
 
+namespace std {
 
 class AutoFuelPump : public FuelPump {
 public:
@@ -21,5 +22,6 @@ private:
 
 };
 
+} /* namespace std */
 
 #endif /* AUTOFUELPUMP_H_ */

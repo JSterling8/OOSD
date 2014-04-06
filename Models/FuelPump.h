@@ -9,16 +9,25 @@
 #define FUELPUMP_H_
 
 #include <string>
+#include "Vehicle.h"
+
+namespace std {
+
 
 class FuelPump {
 public:
-	FuelPump(std::string);
-
+	FuelPump(string);
+	bool isInUse();
+	string getFuelType();
+	void pump(Vehicle*);
+	void pump();
 	virtual ~FuelPump();
 private:
-	std::string fuelType;
+	string fuelType;
 	int flowRate;
 };
+
+} /* namespace std */
 
 
 #endif /* FUELPUMP_H_ */

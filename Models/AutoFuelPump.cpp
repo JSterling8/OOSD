@@ -8,6 +8,7 @@
 #include "AutoFuelPump.h"
 #include "FuelPump.h"
 
+namespace std {
 
 AutoFuelPump::AutoFuelPump(std::string fuelType)  : FuelPump(fuelType) {
 
@@ -17,4 +18,6 @@ AutoFuelPump::AutoFuelPump(std::string fuelType)  : FuelPump(fuelType) {
 AutoFuelPump::~AutoFuelPump() {
 	// TODO Auto-generated destructor stub
 }
+
+} /* namespace std */
 
