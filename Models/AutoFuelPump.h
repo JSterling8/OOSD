@@ -14,7 +14,7 @@
 
 class AutoFuelPump : public FuelPump {
 public:
-	AutoFuelPump(std::string&);
+	AutoFuelPump(std::string);
 	~AutoFuelPump();
 
 private:

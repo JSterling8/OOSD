@@ -10,7 +10,7 @@
 
 
 
-FuelPump::FuelPump(std::string& fuelType) {
+FuelPump::FuelPump(std::string fuelType) {
 	FuelPump::fuelType = fuelType;
 
 	if (fuelType == "Diesel"){
