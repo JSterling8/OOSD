@@ -12,7 +12,7 @@
 
 class FuelPump {
 public:
-	FuelPump(std::string&, int);
+	FuelPump(std::string&);
 
 	virtual ~FuelPump();
 private:

@@ -28,6 +28,9 @@ Vehicle::Vehicle(int fuelLeft, int sizeOfTank, string typeOfFuel) {
 	fuelType = typeOfFuel;
 }
 
+int maxFueCanAdd() {
+	return (tankSize-fuelRemaining);
+}
 
 int getFuelRemaining() {
 	return fuelRemaining;

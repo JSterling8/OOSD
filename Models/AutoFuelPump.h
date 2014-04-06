@@ -14,11 +14,11 @@
 
 class AutoFuelPump : public FuelPump {
 public:
-	AutoFuelPump(std::string, int);
+	AutoFuelPump(std::string&);
 	~AutoFuelPump();
 
 private:
-	std::string steve;
+
 };
 
 

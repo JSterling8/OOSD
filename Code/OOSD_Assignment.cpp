@@ -22,6 +22,7 @@ using namespace std;
 
 
 
+
 int collectResponse( SOCKET & );
 
 int main(int argc, char * argv[]) {
@@ -101,3 +102,5 @@ int collectResponse(SOCKET & socket ) {
 	return
 			bytesRecv;
 }
+
+

@@ -21,8 +21,8 @@ public:
 	int getTankSize();
 	string getFuelType();
 	void addFuel(int);
+	int maxFueCanAdd();
 	virtual ~Vehicle();
-
 private:
 
 };

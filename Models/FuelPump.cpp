@@ -10,9 +10,18 @@
 
 
 
-FuelPump::FuelPump(std::string& fuelType, int flowRate) {
+FuelPump::FuelPump(std::string& fuelType) {
 	FuelPump::fuelType = fuelType;
-	FuelPump::flowRate = flowRate;
+
+	if (fuelType == "Diesel"){
+		FuelPump::flowRate = 10;
+	}
+	else if (fuelType == "Regular" || fuelType == "Premium"){
+		FuelPump::flowRate = 15;
+	}
+	else if (fuelType == "Electric"){
+		FuelPump::flowRate = 2;
+	}
 }
 
 
