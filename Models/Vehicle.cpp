@@ -63,7 +63,6 @@ bool Vehicle::addFuel(int amountToAdd){
 	else {
 		fuelRemaining = tankSize;
 		full = true;
-		cout << "Filled.";
 	}
 
 	return full;
@@ -72,7 +71,7 @@ bool Vehicle::addFuel(int amountToAdd){
 /**
  * @return A string representation of this vehicle for sending to the main office.
  */
-char* toString(){
+char* Vehicle::toCharArray(){
 	int timeToFill = 0;
 
 	if (fuelType == "Diesel"){

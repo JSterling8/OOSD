@@ -16,7 +16,7 @@ namespace std {
 class Vehicle {
 public:
 	Vehicle(int, int, int, string);
-	string toString();
+	char* toCharArray();
 	int getFuelRemaining();
 	int getTankSize();
 	string getFuelType();

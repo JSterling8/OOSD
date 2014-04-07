@@ -20,7 +20,8 @@ public:
 	bool isInUse();
 	string getFuelType();
 	void setVehicleAtPump(Vehicle*);
-	void pump();
+	Vehicle* getVehicleAtPump();
+	bool pump();
 	virtual ~FuelPump();
 private:
 	string fuelType;

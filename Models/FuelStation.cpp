@@ -160,7 +160,9 @@ void FuelStation::vehicleArrivedAt() {
 		// Loop through any pumps with vehicles and call the pump function.
 		for (int j = 0; j < numOfPumps; ++j){
 			if (pumps[j]->isInUse()){
-				pumps[j]->pump();
+				if(pumps[j]->pump()){
+					sendToServer(pumps[j]->getVehicleAtPump());
+				}
 			}
 		}
 
@@ -223,5 +225,68 @@ int FuelStation::getPump(string fuelType){
 	return -1;
 }
 
+void FuelStation::sendToServer(Vehicle* v){
+	WORD		wVersionRequested;
+	WSADATA		wsaData;
+	SOCKADDR_IN target; //Socket address information
+	SOCKET		s;
+	int			err;
+	int			bytesSent;
+	// char		buf[50] = v->toCharArray();
+
+
+	// while(1) {
+		//--- INITIALIZATION -----------------------------------
+		wVersionRequested = MAKEWORD( 1, 1 );
+		err = WSAStartup( wVersionRequested, &wsaData );
+
+		if ( err != 0 ) {
+			printf("WSAStartup error %ld", static_cast<long>( WSAGetLastError() ) );
+			WSACleanup();
+			// return false;
+		}
+		//------------------------------------------------------
+
+		//---- Build address structure to bind to socket.--------
+		target.sin_family = AF_INET; // address family Internet
+		target.sin_port = htons (SERVER_PORT); //Port to connect on
+		target.sin_addr.s_addr = inet_addr (IPAddress); //Target IP
+		//--------------------------------------------------------
+
+
+		// ---- create SOCKET--------------------------------------
+		s = socket (AF_INET, SOCK_STREAM, IPPROTO_TCP); //Create socket
+		if (s == INVALID_SOCKET)
+		{
+			printf("socket error %ld" , static_cast<long>( WSAGetLastError() ) );
+			WSACleanup();
+			// return false; //Couldn't create the socket
+		}
+		//---------------------------------------------------------
+
+
+		//---- try CONNECT -----------------------------------------
+		if (connect(s, (SOCKADDR *)&target, sizeof(target)) == SOCKET_ERROR)
+		{
+			printf("connect error %ld", static_cast<long>( WSAGetLastError() ) );
+			WSACleanup();
+			// return false; //Couldn't connect
+		}
+		//-----------------------------------------------------------
+
+		//---- SEND bytes -------------------------------------------
+		char* toSend = v->toCharArray();
+
+		// scanf( "%s", toSend );  //was gets(buf)
+		bytesSent = send( s, toSend, 50, 0 );
+		printf( "Bytes Sent: %ld \n", static_cast<long>( bytesSent ) );
+		//------------------------------------------------------------
+		closesocket( s );
+		WSACleanup();
+	// }
+
+	_getche();  //was getche()
+	// return 0;
+}
 
 } /* namespace std */

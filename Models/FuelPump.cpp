@@ -51,7 +51,14 @@ void FuelPump::setVehicleAtPump(Vehicle* v){
 	pumpLoop = 0;
 }
 
-void FuelPump::pump(){
+Vehicle* FuelPump::getVehicleAtPump(){
+	return vehicleAtPump;
+}
+
+/**
+ * @return full Whether or not the vehicle is now full.
+ */
+bool FuelPump::pump(){
 	bool full = false;
 
 	if ((pumpLoop + flowRate) >= 15){
@@ -64,6 +71,7 @@ void FuelPump::pump(){
 	}
 
 	pumpLoop++;
+	return full;
 }
 
 

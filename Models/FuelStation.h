@@ -20,6 +20,7 @@ public:
 	void generatePumps();
 	Vehicle* generateRandomVehicle();
 	int getPump(string);
+	void sendToServer(Vehicle*);
 };
 
 } /* namespace std */
