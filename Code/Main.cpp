@@ -12,10 +12,8 @@ using namespace std;
 
 
 int main(int argc, char * argv[]) {
-	char begin;
 	char again = 'y';
 	int numOfStations;
-	int vehicleFrequency;
 
 	while(again == 'y'){
 		numOfStations = 0;
