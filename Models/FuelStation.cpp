@@ -1,6 +1,8 @@
 /**
  * FuelStation.cpp
  *
+ * The client portion of this class is adapted from code developed by Dr. Christopher Newman.
+ *
  *  Created on: 6 Apr 2014
  *      @author: Jonathan Sterling
  */
@@ -27,15 +29,19 @@
 
 namespace std {
 
-#define LENGTH 100
+#define LENGTH 100					// The length of the boolean arrived array.
 
-bool arrived[LENGTH];
-vector<FuelPump*> pumps;
-deque<Vehicle*> vehicleDeque;
-map<string, bool> fuelTypes;
-int numOfPumps;
-int vehicleFrequency;
+bool arrived[LENGTH];				// A log of all of the time units in which vehicles either arrive or do not arrive.
+vector<FuelPump*> pumps;			// A vector of all of the pumps that this fuel station has.
+deque<Vehicle*> vehicleDeque;		// A queue of vehicles waiting for a pump.
+map<string, bool> fuelTypes;		// The types of fuels offered by this fuel station.
+int numOfPumps;						// The total number of pumps this fuel station has.
+int vehicleFrequency;				// The frequency in which vehicles come (used in Poisson distribution).
 
+/**
+ *
+ * @param frequency The frequency in which vehicles come (used in Poisson distribution).
+ */
 FuelStation::FuelStation(int frequency) {
 	// Initialize random seed:
 	srand ( time(NULL) );
@@ -43,6 +49,7 @@ FuelStation::FuelStation(int frequency) {
 	vehicleFrequency = frequency;
 
 	// We have to erase any pumps that exist from previous runs of the simulation.
+	// This is because map entries cannot be overridden.  They must be erased then rewritten.
 	fuelTypes.erase("Diesel");
 	fuelTypes.erase("Premium");
 	fuelTypes.erase("Regular");
@@ -58,9 +65,12 @@ FuelStation::FuelStation(int frequency) {
 	generatePumps();
 }
 
+/**
+ * Generates between 1 and 10 pumps of random fuel types.
+ */
 void FuelStation::generatePumps() {
-	numOfPumps = rand() % 10 + 1;
 	// We can have 1-10 pumps
+	numOfPumps = rand() % 10 + 1;
 	pumps.reserve(numOfPumps);
 
 	// This will be used to determing the pump's fuel type.
@@ -74,6 +84,7 @@ void FuelStation::generatePumps() {
 		typeDecider = rand() % 4 + 1;
 		if (typeDecider == 1){
 			fuelType = "Diesel";
+			// If we don't already have this fuel type, make sure that we note that we now have it.
 			if (!fuelTypes[fuelType]){
 				fuelTypes.erase(fuelType);
 				fuelTypes.insert(std::pair<string, int>(fuelType, true));
@@ -81,6 +92,7 @@ void FuelStation::generatePumps() {
 		}
 		else if (typeDecider == 2){
 			fuelType = "Premium";
+			// If we don't already have this fuel type, make sure that we note that we now have it.
 			if (!fuelTypes[fuelType]){
 				fuelTypes.erase(fuelType);
 				fuelTypes.insert(std::pair<string, int>(fuelType, true));
@@ -88,6 +100,7 @@ void FuelStation::generatePumps() {
 		}
 		else if (typeDecider == 3){
 			fuelType = "Regular";
+			// If we don't already have this fuel type, make sure that we note that we now have it.
 			if (!fuelTypes[fuelType]){
 				fuelTypes.erase(fuelType);
 				fuelTypes.insert(std::pair<string, int>(fuelType, true));
@@ -95,11 +108,13 @@ void FuelStation::generatePumps() {
 		}
 		else if (typeDecider == 4){
 			fuelType = "Electric";
+			// If we don't already have this fuel type, make sure that we note that we now have it.
 			if (!fuelTypes[fuelType]){
 				fuelTypes.erase(fuelType);
 				fuelTypes.insert(std::pair<string, int>(fuelType, true));
 			}
 		}
+		// Initializes the random fuel pump in our vector.
 		pumps[i] = new FuelPump(fuelType);
 	}
 }
@@ -113,19 +128,25 @@ void FuelStation::vehicleArrivedAt() {
 	for( int interval = 0; interval < LENGTH; ++interval ) {
 		// Loop through any waiting vehicles before adding new ones.
 		for (unsigned int i = 0; i < vehicleDeque.size(); ++i){
+			// If there are vehicles in the queue.
 			if (!vehicleDeque.empty()){
+				// Take the first vehicle.
 				Vehicle* temp = vehicleDeque.front();
 				vehicleDeque.pop_front();
 
+				// See if any pumps are available for the first vehicle.
 				pumpIndex = getPump(temp->getFuelType());
 
 				// If there is a pump free (i.e., if pumpIndex isn't -1)
 				if (pumpIndex >= 0){
+					// Add the vehicle at the front of the queue to the freed pump.
 					pumps[pumpIndex]->setVehicleAtPump(temp);
 					cout << "Added a queued vehicle to a freed pump." << endl;
 				}
 				else{
-					vehicleDeque.push_front(temp);
+					// Put the vehicle at the back of the queue.
+					// It goes to the back because if it's electric then it could hold everyone up for ages.
+					vehicleDeque.push_back(temp);
 					cout << "Still no pump free, so the vehicle continues to wait." << endl;
 				}
 			}
@@ -151,11 +172,13 @@ void FuelStation::vehicleArrivedAt() {
 					cout << "There are no pumps available.  Vehicle added to deque. " << endl;
 				}
 			}
+			// The fuel type this vehicle needs to does not exist at this fuel station.
 			else {
 				cout << "Vehicle could not be served.  No pumps of type: " << v->getFuelType() << endl;
 				delete v;
 			}
 		}
+		// Else no vehicles arrived at this time interval.
 		else {
 			arrived[interval] = false;
 		}
@@ -163,6 +186,7 @@ void FuelStation::vehicleArrivedAt() {
 		// Loop through any pumps with vehicles and call the pump function.
 		for (int j = 0; j < numOfPumps; ++j){
 			if (pumps[j]->isInUse()){
+				// If this iteration of pump() fills the vehicle, send a log of the filling to the main server.
 				if(pumps[j]->pump()){
 					sendToServer(pumps[j]->getVehicleAtPump());
 				}
@@ -226,6 +250,11 @@ int FuelStation::getPump(string fuelType){
 	return -1;
 }
 
+/**
+ * This method sends data about the most recently filled vehicle to the central server.
+ *
+ * @param v The vehicle who's just had its tank filled.
+ */
 void FuelStation::sendToServer(Vehicle* v){
 	WORD		wVersionRequested;
 	WSADATA		wsaData;
@@ -233,10 +262,8 @@ void FuelStation::sendToServer(Vehicle* v){
 	SOCKET		s;
 	int			err;
 	int			bytesSent;
-	// char		buf[50] = v->toCharArray();
 
 
-	// while(1) {
 		//--- INITIALIZATION -----------------------------------
 		wVersionRequested = MAKEWORD( 1, 1 );
 		err = WSAStartup( wVersionRequested, &wsaData );
@@ -285,10 +312,8 @@ void FuelStation::sendToServer(Vehicle* v){
 		//------------------------------------------------------------
 		closesocket( s );
 		WSACleanup();
-	// }
 
 	_getche();  //was getche()
-	// return 0;
 }
 
 } /* namespace std */
