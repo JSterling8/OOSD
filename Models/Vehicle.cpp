@@ -12,9 +12,11 @@ namespace std {
 int fuelRemaining;
 int tankSize;
 string fuelType;
+int amountFilled;
 bool full;
+int vehicleId;
 
-Vehicle::Vehicle(int vehicleId, int fuelLeft, int sizeOfTank, string typeOfFuel) {
+Vehicle::Vehicle(int id, int fuelLeft, int sizeOfTank, string typeOfFuel) {
 	if (sizeOfTank <= 0){
 		sizeOfTank = 10;
 	}
@@ -27,8 +29,10 @@ Vehicle::Vehicle(int vehicleId, int fuelLeft, int sizeOfTank, string typeOfFuel)
 	}
 
 	fuelRemaining = fuelLeft;
+	amountFilled = sizeOfTank-fuelLeft;
 	tankSize = sizeOfTank;
 	fuelType = typeOfFuel;
+	vehicleId = id;
 	full = false;
 }
 
@@ -61,6 +65,25 @@ bool Vehicle::addFuel(int amountToAdd){
 	}
 
 	return full;
+}
+
+/**
+ * @return A string representation of this vehicle for sending to the main office.
+ */
+string toString(){
+	int timeToFill = 0;
+
+	if (fuelType == "Diesel"){
+		timeToFill = amountFilled*5;
+	}
+	else if (fuelType == "Regular" || fuelType == "Premium"){
+		timeToFill = amountFilled;
+	}
+	else if (fuelType == "Electric"){
+		timeToFill = amountFilled*12;
+	}
+
+	return "ID: " + vehicleId + " Fuel Added: " + amountFilled + "Time to Fill: " + timeToFill;
 }
 
 
