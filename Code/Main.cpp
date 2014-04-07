@@ -26,13 +26,12 @@ int main(int argc, char * argv[]) {
 			}
 		}
 
-
-
 		FuelStation* stations[numOfStations];
 		for (int i = 0; i < numOfStations; ++i){
 			stations[i] = new FuelStation(10);
 			cout << "Fuel station " << i+1 << ":" << endl;
-			stations[0]->vehicleArrivedAt();
+			stations[i]->vehicleArrivedAt();
+			delete stations[i];
 		}
 
 		cout << "Run again? y/n" << endl;
