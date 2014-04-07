@@ -89,7 +89,7 @@ bool Vehicle::addFuel(int amountToAdd){
 }
 
 /**
- * @return A string representation of this vehicle for sending to the main office.
+ * @return A character representation of this vehicle for sending to the main office.
  */
 char* Vehicle::toCharArray(){
 	int timeToFill = 0;
