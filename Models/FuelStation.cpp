@@ -87,9 +87,7 @@ void FuelStation::generatePumps() {
 				fuelTypes.insert(std::pair<string, int>(fuelType, true));
 			}
 		}
-		cout << "6" << endl;
 		pumps[i] = new FuelPump(fuelType);
-		cout << "7" << endl;
 	}
 }
 
@@ -120,7 +118,7 @@ void FuelStation::vehicleArrivedAt() {
 				}
 			}
 			else {
-				cout << "Vehicle could not be served.  No pumps of that type." << endl;
+				cout << "Vehicle could not be served.  No pumps of type." << v->getFuelType() << endl;
 				delete v;
 			}
 		}
