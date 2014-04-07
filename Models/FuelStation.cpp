@@ -1,8 +1,8 @@
-/*
+/**
  * FuelStation.cpp
  *
  *  Created on: 6 Apr 2014
- *      Author: Jon
+ *      @author: Jonathan Sterling
  */
 
 #include "FuelStation.h"
@@ -168,8 +168,6 @@ void FuelStation::vehicleArrivedAt() {
 				}
 			}
 		}
-
-		// TODO If the pumping is complete log the data.
 	}
 }
 

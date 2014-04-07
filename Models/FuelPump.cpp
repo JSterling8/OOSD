@@ -1,8 +1,8 @@
-/*
+/**
  * FuelPump.cpp
  *
  *  Created on: 18 Feb 2014
- *      Author: Jon
+ *  @author: Jonathan Sterling
  */
 
 #include "FuelPump.h"

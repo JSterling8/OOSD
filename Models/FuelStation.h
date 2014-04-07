@@ -1,8 +1,8 @@
-/*
+/**
  * FuelStation.h
  *
  *  Created on: 6 Apr 2014
- *      Author: Jon
+ *      @author: Jonathan Sterling
  */
 
 #ifndef FUELSTATION_H_

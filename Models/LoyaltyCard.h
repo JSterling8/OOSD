@@ -1,8 +1,8 @@
-/*
+/**
  * LoyaltyCard.h
  *
  *  Created on: 7 Apr 2014
- *      Author: Jon
+ *      @author: Jonathan Sterling
  */
 
 #ifndef LOYALTYCARD_H_

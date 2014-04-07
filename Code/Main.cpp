@@ -1,8 +1,8 @@
-/*
+/**
  * Main.cpp
  *
  *  Created on: 6 Apr 2014
- *      Author: Jon
+ *      @author: Jonathan Sterling
  */
 
 #include "..\Models\FuelStation.h"

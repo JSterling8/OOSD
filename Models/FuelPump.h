@@ -1,8 +1,8 @@
-/*
+/**
  * FuelPump.h
  *
  *  Created on: 18 Feb 2014
- *      Author: Jon
+ *      @author: Jonathan Sterling
  */
 
 #ifndef FUELPUMP_H_

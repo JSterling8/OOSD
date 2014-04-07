@@ -1,8 +1,8 @@
-/*
+/**
  * LoyaltyCard.cpp
  *
  *  Created on: 7 Apr 2014
- *      Author: Jon
+ *      @author: Jonathan Sterling
  */
 
 #include "LoyaltyCard.h"
