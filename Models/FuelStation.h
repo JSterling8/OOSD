@@ -15,7 +15,7 @@ namespace std {
 
 class FuelStation {
 public:
-	FuelStation();
+	FuelStation(int);
 	void vehicleArrivedAt();
 	void generatePumps();
 	Vehicle* generateRandomVehicle();

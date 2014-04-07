@@ -6,6 +6,7 @@
  */
 
 #include "Vehicle.h"
+#include "LoyaltyCard.h"
 #include<stdio.h>
 
 namespace std {
@@ -15,7 +16,7 @@ int tankSize;
 string fuelType;
 int amountFilled;
 bool full;
-int vehicleId;
+LoyaltyCard* loyaltyCard;
 
 Vehicle::Vehicle(int id, int fuelLeft, int sizeOfTank, string typeOfFuel) {
 	if (sizeOfTank <= 0){
@@ -33,7 +34,7 @@ Vehicle::Vehicle(int id, int fuelLeft, int sizeOfTank, string typeOfFuel) {
 	amountFilled = sizeOfTank-fuelLeft;
 	tankSize = sizeOfTank;
 	fuelType = typeOfFuel;
-	vehicleId = id;
+	loyaltyCard = new LoyaltyCard(id);
 	full = false;
 }
 
@@ -85,7 +86,7 @@ char* Vehicle::toCharArray(){
 	}
 
 	static char numstr[50];
-	sprintf(numstr, "ID: %d Fuel Added: %d Time to Fill: %d", vehicleId, amountFilled, timeToFill);
+	sprintf(numstr, "ID: %d Fuel Added: %d Time to Fill: %d", loyaltyCard->getId(), amountFilled, timeToFill);
 
 	return numstr;
 }

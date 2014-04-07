@@ -15,6 +15,7 @@ int main(int argc, char * argv[]) {
 	char begin;
 	char again = 'y';
 	int numOfStations;
+	int vehicleFrequency;
 
 	while(again == 'y'){
 		numOfStations = 0;
@@ -28,9 +29,10 @@ int main(int argc, char * argv[]) {
 		}
 
 
+
 		FuelStation* stations[numOfStations];
 		for (int i = 0; i < numOfStations; ++i){
-			stations[i] = new FuelStation();
+			stations[i] = new FuelStation(10);
 			cout << "Fuel station " << i+1 << ":" << endl;
 			stations[0]->vehicleArrivedAt();
 		}

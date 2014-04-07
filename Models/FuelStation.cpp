@@ -34,10 +34,13 @@ vector<FuelPump*> pumps;
 deque<Vehicle*> vehicleDeque;
 map<string, bool> fuelTypes;
 int numOfPumps;
+int vehicleFrequency;
 
-FuelStation::FuelStation() {
+FuelStation::FuelStation(int frequency) {
 	// Initialize random seed:
 	srand ( time(NULL) );
+
+	vehicleFrequency = frequency;
 
 	// We have to erase any pumps that exist from previous runs of the simulation.
 	fuelTypes.erase("Diesel");
@@ -128,7 +131,7 @@ void FuelStation::vehicleArrivedAt() {
 			}
 		}
 
-		int dice = rand() % 10 + 1;
+		int dice = rand() % vehicleFrequency + 1;
 		// Handle vehicles arriving
 		if ( dice > bar ) {
 			arrived[interval] = true;
@@ -178,12 +181,20 @@ void FuelStation::vehicleArrivedAt() {
  * @returns A random vehicle.
  */
 Vehicle* FuelStation::generateRandomVehicle() {
+	// Initialize random seed:
+	srand ( time(NULL) );
+
 	// Tank size is between 1 and 30.
 	int tankSize = rand() % 30 + 1;
+
+	// Initialize random seed:
+	srand ( time(NULL) );
 
 	// Fuel remaining is between 0 and tankSize-1.
 	int fuelRemaining = tankSize - (rand() % tankSize + 1);
 
+	// Initialize random seed:
+	srand ( time(NULL) );
 	// The vehicle's ID.
 	int vehicleId = rand() % 100 + 1;
 
@@ -280,6 +291,7 @@ void FuelStation::sendToServer(Vehicle* v){
 		// scanf( "%s", toSend );  //was gets(buf)
 		bytesSent = send( s, toSend, 50, 0 );
 		printf( "Bytes Sent: %ld \n", static_cast<long>( bytesSent ) );
+		cout << endl << "Press enter to continue..." << endl;
 		//------------------------------------------------------------
 		closesocket( s );
 		WSACleanup();
