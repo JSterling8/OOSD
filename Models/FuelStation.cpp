@@ -24,6 +24,7 @@ bool arrived[LENGTH];
 vector<FuelPump*> pumps;
 deque<Vehicle*> vehicleDeque;
 map<string, bool> fuelTypes;
+int numOfPumps;
 
 FuelStation::FuelStation() {
 	// Initialize random seed:
@@ -46,7 +47,7 @@ FuelStation::FuelStation() {
 }
 
 void FuelStation::generatePumps() {
-	int numOfPumps = rand() % 10 + 1;
+	numOfPumps = rand() % 10 + 1;
 	// We can have 1-10 pumps
 	pumps.reserve(numOfPumps);
 
@@ -98,6 +99,26 @@ void FuelStation::vehicleArrivedAt() {
 	double bar = 10.0 * exp(-0.1);
 	int pumpIndex = -1;
 	for( int interval = 0; interval < LENGTH; ++interval ) {
+		// Loop through any waiting vehicles before adding new ones.
+		for (unsigned int i = 0; i < vehicleDeque.size(); ++i){
+			if (!vehicleDeque.empty()){
+				Vehicle* temp = vehicleDeque.front();
+				vehicleDeque.pop_front();
+
+				pumpIndex = getPump(temp->getFuelType());
+
+				// If there is a pump free (i.e., if pumpIndex isn't -1)
+				if (pumpIndex >= 0){
+					pumps[pumpIndex]->setVehicleAtPump(temp);
+					cout << "Added a queued vehicle to a freed pump." << endl;
+				}
+				else{
+					vehicleDeque.push_front(temp);
+					cout << "Still no pump free, so the vehicle continues to wait." << endl;
+				}
+			}
+		}
+
 		int dice = rand() % 10 + 1;
 		// Handle vehicles arriving
 		if ( dice > bar ) {
@@ -115,10 +136,11 @@ void FuelStation::vehicleArrivedAt() {
 				// If no pump is free, add the Vehicle to the end of the queue.
 				else{
 					vehicleDeque.push_back(v);
+					cout << "There are no pumps available.  Vehicle added to deque. " << endl;
 				}
 			}
 			else {
-				cout << "Vehicle could not be served.  No pumps of type." << v->getFuelType() << endl;
+				cout << "Vehicle could not be served.  No pumps of type: " << v->getFuelType() << endl;
 				delete v;
 			}
 		}
@@ -127,28 +149,9 @@ void FuelStation::vehicleArrivedAt() {
 		}
 
 		// Loop through any pumps with vehicles and call the pump function.
-		for (unsigned int j = 0; j < pumps.size(); ++j){
+		for (int j = 0; j < numOfPumps; ++j){
 			if (pumps[j]->isInUse()){
 				pumps[j]->pump();
-			}
-		}
-
-
-		// Loop through any waiting vehicles
-		for (unsigned int i = 0; i < vehicleDeque.size(); ++i){
-			if (!vehicleDeque.empty()){
-				Vehicle* temp = vehicleDeque.front();
-				vehicleDeque.pop_front();
-
-				pumpIndex = getPump(temp->getFuelType());
-
-				// If there is a pump free (i.e., if pumpIndex isn't -1)
-				if (pumpIndex >= 0){
-					pumps[pumpIndex]->setVehicleAtPump(temp);
-				}
-				else{
-					vehicleDeque.push_back(temp);
-				}
 			}
 		}
 
@@ -170,6 +173,9 @@ Vehicle* FuelStation::generateRandomVehicle() {
 	// Fuel remaining is between 0 and tankSize-1.
 	int fuelRemaining = tankSize - (rand() % tankSize + 1);
 
+	// The vehicle's ID.
+	int vehicleId = rand() % 100 + 1;
+
 	string fuelType;
 
 	// Randomly assigns a fuel type.
@@ -189,7 +195,7 @@ Vehicle* FuelStation::generateRandomVehicle() {
 	}
 
 	// Returns a Vehicle with the three random variables calculated above.
-	return new Vehicle(fuelRemaining, tankSize, fuelType);
+	return new Vehicle(vehicleId, fuelRemaining, tankSize, fuelType);
 }
 
 /**
@@ -198,7 +204,7 @@ Vehicle* FuelStation::generateRandomVehicle() {
  */
 int FuelStation::getPump(string fuelType){
 	// Loop through the pumps.
-	for(unsigned int i = 0; i < pumps.size(); ++i){
+	for(int i = 0; i < numOfPumps; ++i){
 		// If a pump of the correct fuel type is available, return its index in the FuelPump vector.
 		if (pumps[i]->getFuelType() == fuelType && !pumps[i]->isInUse()){
 			return i;

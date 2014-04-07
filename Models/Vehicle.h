@@ -15,13 +15,12 @@ namespace std {
 
 class Vehicle {
 public:
-	Vehicle(int, int, string);
+	Vehicle(int, int, int, string);
 	string toStringg();
 	int getFuelRemaining();
 	int getTankSize();
 	string getFuelType();
 	bool addFuel(int);
-	int maxFuelCanAdd();
 	virtual ~Vehicle();
 private:
 

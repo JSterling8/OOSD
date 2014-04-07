@@ -19,9 +19,6 @@ int main(int argc, char * argv[]) {
 	while(again == 'y'){
 		numOfStations = 0;
 
-		cout << "Begin simulation? y/n" << endl;
-		cin >> begin;
-
 		while(numOfStations < 1 || numOfStations > 100){
 			cout << "How many fuel stations do you want to simulate? (1-100)" << endl;
 			cin >> numOfStations;
@@ -31,14 +28,11 @@ int main(int argc, char * argv[]) {
 		}
 
 
-
-		if(begin == 'y'){
-			FuelStation* stations[numOfStations];
-			for (int i = 0; i < numOfStations; ++i){
-				stations[i] = new FuelStation();
-				cout << "Fuel station " << i+1 << ":" << endl;
-				stations[0]->vehicleArrivedAt();
-			}
+		FuelStation* stations[numOfStations];
+		for (int i = 0; i < numOfStations; ++i){
+			stations[i] = new FuelStation();
+			cout << "Fuel station " << i+1 << ":" << endl;
+			stations[0]->vehicleArrivedAt();
 		}
 
 		cout << "Run again? y/n" << endl;

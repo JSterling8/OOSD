@@ -9,6 +9,7 @@
 #include "Vehicle.h"
 #include <string>
 #include <cstdlib>
+#include <iostream>
 
 namespace std {
 

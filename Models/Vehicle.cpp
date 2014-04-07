@@ -14,7 +14,7 @@ int tankSize;
 string fuelType;
 bool full;
 
-Vehicle::Vehicle(int fuelLeft, int sizeOfTank, string typeOfFuel) {
+Vehicle::Vehicle(int vehicleId, int fuelLeft, int sizeOfTank, string typeOfFuel) {
 	if (sizeOfTank <= 0){
 		sizeOfTank = 10;
 	}
@@ -30,10 +30,6 @@ Vehicle::Vehicle(int fuelLeft, int sizeOfTank, string typeOfFuel) {
 	tankSize = sizeOfTank;
 	fuelType = typeOfFuel;
 	full = false;
-}
-
-int Vehicle::maxFuelCanAdd() {
-	return (tankSize-fuelRemaining);
 }
 
 int Vehicle::getFuelRemaining() {
