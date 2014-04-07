@@ -181,20 +181,12 @@ void FuelStation::vehicleArrivedAt() {
  * @returns A random vehicle.
  */
 Vehicle* FuelStation::generateRandomVehicle() {
-	// Initialize random seed:
-	srand ( time(NULL) );
-
 	// Tank size is between 1 and 30.
 	int tankSize = rand() % 30 + 1;
-
-	// Initialize random seed:
-	srand ( time(NULL) );
 
 	// Fuel remaining is between 0 and tankSize-1.
 	int fuelRemaining = tankSize - (rand() % tankSize + 1);
 
-	// Initialize random seed:
-	srand ( time(NULL) );
 	// The vehicle's ID.
 	int vehicleId = rand() % 100 + 1;
 
