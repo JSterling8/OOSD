@@ -15,6 +15,15 @@
 #include <vector>
 #include <deque>
 #include <map>
+#include <iostream>
+#include "winsock2.h"
+#include "conio.h"
+#include <cstdio>
+
+#define SERVER_PORT 12345
+#define BUF_SIZE 4096 // block transfer size
+#define QUEUE_SIZE 10
+#define IPAddress "127.0.0.1" // Local to the system - Loop back address
 
 namespace std {
 

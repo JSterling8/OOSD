@@ -6,6 +6,7 @@
  */
 
 #include "Vehicle.h"
+#include<stdio.h>
 
 namespace std {
 
@@ -62,6 +63,7 @@ bool Vehicle::addFuel(int amountToAdd){
 	else {
 		fuelRemaining = tankSize;
 		full = true;
+		cout << "Filled.";
 	}
 
 	return full;
@@ -70,7 +72,7 @@ bool Vehicle::addFuel(int amountToAdd){
 /**
  * @return A string representation of this vehicle for sending to the main office.
  */
-string toString(){
+char* toString(){
 	int timeToFill = 0;
 
 	if (fuelType == "Diesel"){
@@ -83,7 +85,10 @@ string toString(){
 		timeToFill = amountFilled*12;
 	}
 
-	return "ID: " + vehicleId + " Fuel Added: " + amountFilled + "Time to Fill: " + timeToFill;
+	static char numstr[50];
+	sprintf(numstr, "ID: %d Fuel Added: %d Time to Fill: %d", vehicleId, amountFilled, timeToFill);
+
+	return numstr;
 }
 
 

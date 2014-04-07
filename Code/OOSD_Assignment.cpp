@@ -6,8 +6,6 @@
 // Description : Hello World in C++, Ansi-style
 //============================================================================
 
-/*
-
 #include <iostream>
 #include "winsock2.h"
 #include "conio.h"
@@ -20,23 +18,15 @@
 
 using namespace std;
 
-
-
-
-int collectResponse( SOCKET & );
-
 int main(int argc, char * argv[]) {
 
-	std::cout << "Is the server running?" << std::endl; //
-	std::cout << "Requires a running server to make a connection?" << std::endl; //
-	std::cout << "Enter a few characters maximum 9" << std::endl;
 	WORD		wVersionRequested;
 	WSADATA		wsaData;
 	SOCKADDR_IN target; //Socket address information
 	SOCKET		s;
 	int			err;
 	int			bytesSent;
-	char		buf[10] = "hi hello";
+	char		buf[50] = "hi hello";
 
 
 	while(1) {
@@ -83,9 +73,8 @@ int main(int argc, char * argv[]) {
 		//---- SEND bytes -------------------------------------------
 
 		scanf( "%s", buf );  //was gets(buf)
-		bytesSent = send( s, buf, 10, 0 );
+		bytesSent = send( s, buf, 50, 0 );
 		printf( "Bytes Sent: %ld \n", static_cast<long>( bytesSent ) );
-		collectResponse( s );
 		//------------------------------------------------------------
 		closesocket( s );
 		WSACleanup();
@@ -94,14 +83,3 @@ int main(int argc, char * argv[]) {
 	_getche();  //was getche()
 	return 0;
 }
-
-int collectResponse(SOCKET & socket ) {
-	char ACK_Buffer[12] = { };
-	int bytesRecv = recv( socket, ACK_Buffer, 12, 0 );
-	printf("BytesRecv: %d : %s\n ", bytesRecv,ACK_Buffer);
-	return
-			bytesRecv;
-}
-
-
-*/
