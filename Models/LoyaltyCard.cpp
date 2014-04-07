@@ -9,7 +9,7 @@
 
 namespace std {
 
-int id;
+int id;			// The ID # of this card.
 
 LoyaltyCard::LoyaltyCard(int loyaltyId) {
 	id = loyaltyId;

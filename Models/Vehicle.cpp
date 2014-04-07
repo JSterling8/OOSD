@@ -11,14 +11,22 @@
 
 namespace std {
 
-int fuelRemaining;
-int tankSize;
-string fuelType;
-int amountFilled;
-bool full;
-LoyaltyCard* loyaltyCard;
+int fuelRemaining;				// The amount of fuel left in this vehicle's tank.
+int tankSize;					// The maximum amount of fuel that this vehicle can hold.
+string fuelType;				// The type of fuel this vehicle requires.
+int amountFilled;				// The total amount added to the tank at the last fillup.
+bool full;						// Whether or not the vehicle's fuel tank is full.
+LoyaltyCard* loyaltyCard;		// The loyalty card attributed to this vehicle.
 
+/**
+ *
+ * @param id The id of the loyalty card attached to the vehicle.
+ * @param fuelLeft The amount of fuel remaining in the vehicle's fuel tank.
+ * @param sizeOfTank The maximum capacity of the fuel tank.
+ * @param typeOfFuel The Type of fuel that this vehicle requires.
+ */
 Vehicle::Vehicle(int id, int fuelLeft, int sizeOfTank, string typeOfFuel) {
+	// The size of the fuel tank must be positive.
 	if (sizeOfTank <= 0){
 		sizeOfTank = 10;
 	}
@@ -38,15 +46,26 @@ Vehicle::Vehicle(int id, int fuelLeft, int sizeOfTank, string typeOfFuel) {
 	full = false;
 }
 
+/**
+ *
+ * @return fuelRemaining The amount of fuel in the fuel tank.
+ */
 int Vehicle::getFuelRemaining() {
 	return fuelRemaining;
 }
 
-
+/**
+ *
+ * @return tankSize The maximum amount of fuel this vehicle's tank can hold.
+ */
 int Vehicle::getTankSize(){
 	return tankSize;
 }
 
+/**
+ *
+ * @return The type of fuel that this vehicle requires.
+ */
 string Vehicle::getFuelType(){
 	return fuelType;
 }
@@ -54,7 +73,7 @@ string Vehicle::getFuelType(){
 /**
  *
  * @param amountToAdd How much fuel to add to the vehicle.
- * @return Whether or not it's full.
+ * @return Whether or not the vehicle's tank is  full.
  */
 bool Vehicle::addFuel(int amountToAdd){
 	// Only adds as much fuel as the tank can hold.
